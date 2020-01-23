@@ -1,0 +1,89 @@
+# Author:  Johannes Kazantzidis
+# Date:    03-12-2019
+# Version: v1.0
+
+############################
+#  STATUS BLOCK
+############################ 
+define_status_block()
+
+#Operation modes
+add_digital("OpMode_FreeRun",          PV_DESC="Operation Mode FreeRun", PV_ONAM="True",                       PV_ZNAM="False")
+add_digital("OpMode_Forced",           PV_DESC="Operation Mode Forced",  PV_ONAM="True",                       PV_ZNAM="False")
+
+#Inhibit signals (set by the PLC code, can't be changed by the OPI)
+add_digital("Inhibit_Manual",          PV_DESC="Inhibit Manual Mode",    PV_ONAM="InhibitManual",              PV_ZNAM="AllowManual")
+add_digital("Inhibit_Force",           PV_DESC="Inhibit Force Mode",     PV_ONAM="InhibitForce",               PV_ZNAM="AllowForce")
+add_digital("Inhibit_Lock",            PV_DESC="Inhibit Locking",        PV_ONAM="InhibitLocking",             PV_ZNAM="AllowLocking")
+add_analog("TransmitterColor",         "INT",                            PV_DESC="Transmitter color")
+
+#for OPI visualization
+add_digital("EnableFreeRunBtn",        PV_DESC="Enable Free Run Button", PV_ONAM="True",                       PV_ZNAM="False")
+add_digital("EnableForcedBtn",         PV_DESC="Enable Force Button",    PV_ONAM="True",                       PV_ZNAM="False")
+add_digital("EnableManualBtn",         PV_DESC="Enable Manual Button",   PV_ONAM="True",                       PV_ZNAM="False")
+add_analog("ScaleLOW",                 "REAL",                           PV_DESC="Scale LOW",                  PV_EGU="[PLCF#EGU]")
+add_analog("ScaleHIGH",                "REAL",                           PV_DESC="Scale HIGH",                 PV_EGU="[PLCF#EGU]")
+
+#Transmitter value
+add_analog("MeasValue",                "REAL",                           PV_DESC="Value in Engineering Unit",          PV_EGU="[PLCF#EGU]")
+add_analog("MeasCurrent",              "REAL",                           PV_DESC="Measured Current",     PV_EGU="mA")
+
+#Locking mechanism
+add_digital("DevLocked",               PV_DESC="Device Locked",          PV_ONAM="True",                       PV_ZNAM="False")
+add_analog("Faceplate_LockID",         "DINT",                           PV_DESC="Owner Lock ID")
+add_analog("BlockIcon_LockID",         "DINT",                           PV_DESC="Guest Lock ID")
+
+add_digital("LatchAlarm",                            PV_DESC="Latching of the alarms")
+add_digital("GroupAlarm",                            PV_DESC="Group Alarm for OPI")
+
+#Alarm signals
+add_major_alarm("Underrange",          "Value Underrange",         PV_ZNAM="NominalState")
+add_major_alarm("Overrange",           "Value Overrange",          PV_ZNAM="NominalState")
+add_major_alarm("HIHI",                "Value HIHI",               PV_ZNAM="NominalState")
+add_minor_alarm("HI",                  "Value HI",                 PV_ZNAM="NominalState")
+add_minor_alarm("LO",                  "Value LO",                 PV_ZNAM="NominalState")
+add_major_alarm("LOLO",                "Value LOLO",               PV_ZNAM="NominalState")
+add_major_alarm("IO_Error",            "IO_Error",                       PV_ZNAM="NominalState")
+add_major_alarm("Module_Error",        "Module_Error",                   PV_ZNAM="NominalState")
+
+#Feedback
+add_analog("FB_ForceValue",            "REAL",                           PV_DESC="Feedback Force Value", PV_EGU="[PLCF#EGU]")
+add_analog("FB_Limit_HIHI",            "REAL",                           PV_DESC="Feedback Limit HIHI",        PV_EGU="[PLCF#EGU]")
+add_analog("FB_Limit_HI",              "REAL",                           PV_DESC="Feedback Limit HI",          PV_EGU="[PLCF#EGU]")
+add_analog("FB_Limit_LO",              "REAL",                           PV_DESC="Feedback Limit LO",          PV_EGU="[PLCF#EGU]")
+add_analog("FB_Limit_LOLO",            "REAL",                           PV_DESC="Feedback Limit LOLO",        PV_EGU="[PLCF#EGU]")
+
+
+############################
+#  COMMAND BLOCK
+############################ 
+define_command_block()
+
+#OPI buttons
+add_digital("Cmd_FreeRun",             PV_DESC="CMD: FreeRun Mode")
+add_digital("Cmd_Force",               PV_DESC="CMD: Force Mode")
+add_digital("Cmd_ForceVal",            PV_DESC="CMD: Force Value")
+
+add_digital("Cmd_AckAlarm",            PV_DESC="CMD: Acknowledge Alarm")
+
+add_digital("Cmd_ForceUnlock",         PV_DESC="CMD: Force Unlock Device")
+add_digital("Cmd_DevLock",             PV_DESC="CMD: Lock Device")
+add_digital("Cmd_DevUnlock",           PV_DESC="CMD: Unlock Device")
+
+############################
+#  PARAMETER BLOCK
+############################ 
+define_parameter_block()
+
+#Limits
+add_analog("P_Limit_HIHI",             "REAL",                           PV_DESC="Limit HIHI",                 PV_EGU="[PLCF#EGU]")
+add_analog("P_Limit_HI",               "REAL",                           PV_DESC="Limit HI",                   PV_EGU="[PLCF#EGU]")
+add_analog("P_Limit_LO",               "REAL",                           PV_DESC="Limit LO",                   PV_EGU="[PLCF#EGU]")
+add_analog("P_Limit_LOLO",             "REAL",                           PV_DESC="Limit LOLO",                 PV_EGU="[PLCF#EGU]")
+
+#Forcing
+add_analog("P_ForceValue",             "REAL",                           PV_DESC="Force Value",          PV_EGU="[PLCF#EGU]")
+
+#Locking mechanism
+add_analog("P_Faceplate_LockID",       "DINT",                           PV_DESC="Device ID after Lock")
+add_analog("P_BlockIcon_LockID",       "DINT",                           PV_DESC="Device ID after Blockicon Open")

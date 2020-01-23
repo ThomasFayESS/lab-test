@@ -1,0 +1,32 @@
+# @field IPADDR
+# @type STRING
+# PLC IP address
+
+# @field RECVTIMEOUT
+# @type INTEGER
+# PLC->EPICS receive timeout (ms), should be longer than frequency of PLC SND block trigger (REQ input)
+
+# @field tgt-twds1000_ctrl-plc-01_VERSION
+# @runtime YES
+
+
+# S7 port           : 2000
+# Input block size  : 1114 bytes
+# Output block size : 0 bytes
+# Endianness        : LittleEndian
+s7plcConfigure("Tgt-TWDS1000:Ctrl-PLC-01", $(IPADDR), 2000, 1114, 0, 0, $(RECVTIMEOUT), 0)
+
+# Modbus port       : 502
+drvAsynIPPortConfigure("Tgt-TWDS1000:Ctrl-PLC-01", $(IPADDR):502, 0, 0, 1)
+
+# Link type         : TCP/IP (0)
+modbusInterposeConfig("Tgt-TWDS1000:Ctrl-PLC-01", 0, $(RECVTIMEOUT), 0)
+
+# Slave address     : 0
+# Function code     : 16 - Write Multiple Registers
+# Addressing        : Absolute (-1)
+# Data segment      : 2 words
+drvModbusAsynConfigure("Tgt-TWDS1000:Ctrl-PLC-01write", "Tgt-TWDS1000:Ctrl-PLC-01", 0, 16, -1, 2, 0, 0, "S7-1500")
+
+# Load plc interface database
+dbLoadRecords("tgt-twds1000_ctrl-plc-01.db", "PLCNAME=Tgt-TWDS1000:Ctrl-PLC-01, MODVERSION=$(tgt-twds1000_ctrl-plc-01_VERSION), S7_PORT=2000, MODBUS_PORT=502")

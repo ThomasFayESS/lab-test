@@ -1,0 +1,7 @@
+
+# @field tgt-twds1000_ctrl-plc-01_VERSION
+# @runtime YES
+
+
+# Load plc interface database
+dbLoadRecords("tgt-twds1000_ctrl-plc-01-test.db", "MODVERSION=$(tgt-twds1000_ctrl-plc-01_VERSION)")

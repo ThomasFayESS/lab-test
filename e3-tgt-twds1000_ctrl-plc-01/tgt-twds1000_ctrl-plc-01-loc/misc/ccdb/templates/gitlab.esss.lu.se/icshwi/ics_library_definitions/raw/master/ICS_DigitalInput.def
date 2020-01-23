@@ -1,0 +1,45 @@
+###################################### ICS HWI ###############################################
+#############################  ICS Instrument Library     ####################################
+##  PLC Sample Code in VersionDog: ICS_LIBRARY_MASTER_PLC                                   ## 
+##  CCDB device types: ICS_DO                                                               ##  
+##  EPICS HMI (Block Icons/Faceplates)@ GitLab. Projekt: Cryo / CryogenicsLibrary / CryoLib ##
+##                                                                                          ##  
+##                             DIO - Single Digital Input/Output                            ##
+##                                                                                          ##  
+##                                                                                          ##  
+############################ Version: 1.0             ########################################
+# Author:  Saeed, Miklos Boros 
+# Date:    20-11-2019
+# Version: v1.0
+
+
+
+############################
+#  STATUS BLOCK
+############################ 
+define_status_block()
+
+add_digital("OpMode_Auto",             PV_DESC="Operation Mode Auto",       PV_ONAM="True",           PV_ZNAM="False")
+add_digital("OpMode_Manual",           PV_DESC="Operation Mode Manual",     PV_ONAM="True",           PV_ZNAM="False")
+add_digital("Opened",                  PV_DESC="Opened",                    PV_ONAM="True",           PV_ZNAM="False")
+add_digital("Closed",                  PV_DESC="Closed",                    PV_ONAM="True",           PV_ZNAM="False")
+
+
+
+############################
+#  COMMAND BLOCK
+############################ 
+define_command_block()
+
+add_digital("Cmd_Auto",                PV_DESC="CMD: Auto Mode")
+add_digital("Cmd_Manual",              PV_DESC="CMD: Manual Mode")
+
+add_digital("Cmd_ManuOpen",            PV_DESC="CMD: Manual Open")
+add_digital("Cmd_ManuClose",           PV_DESC="CMD: Manual Close")
+
+
+############################
+#  PARAMETER BLOCK
+############################ 
+define_parameter_block()
+

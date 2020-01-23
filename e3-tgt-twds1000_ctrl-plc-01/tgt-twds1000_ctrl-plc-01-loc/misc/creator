@@ -1,0 +1,6 @@
+#!/bin/sh
+
+#PLCFactory branch: master
+#PLCFactory commit: f1289053d9df2e9dccebe3f8e128688bc60589b8
+
+plcfactory.py -d Tgt-TWDS1000:Ctrl-PLC-01 --plc-beckhoff --e3=Tgt-TWDS1000_Ctrl-PLC-01
